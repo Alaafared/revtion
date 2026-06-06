@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المراجعة النهائية في الفيزياء</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg2: #0f1628;
+  --card: #141c35;
+  --card2: #1a2440;
+  --accent: #4f8fff;
+  --accent2: #00e5ff;
+  --accent3: #7c3aed;
+  --gold: #f59e0b;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --border: rgba(79,143,255,0.2);
+  --glow: rgba(79,143,255,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Tajawal',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Background effect */
+body::before{
+  content:'';
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(79,143,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(124,58,237,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(0,229,255,0.04) 0%, transparent 60%);
+  pointer-events:none;z-index:0;
+}
+
+/* Header */
+header{
+  position:relative;z-index:10;
+  background:linear-gradient(135deg,rgba(15,22,40,0.95),rgba(20,28,53,0.95));
+  border-bottom:1px solid var(--border);
+  padding:0;
+  backdrop-filter:blur(20px);
+}
+.hero{
+  text-align:center;
+  padding:50px 20px 40px;
+  position:relative;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(79,143,255,0.1);
+  border:1px solid rgba(79,143,255,0.3);
+  border-radius:50px;
+  padding:6px 18px;
+  font-size:13px;color:var(--accent2);
+  margin-bottom:20px;
+  animation:fadeDown 0.6s ease;
+}
+.hero h1{
+  font-family:'Cairo',sans-serif;
+  font-size:clamp(28px,5vw,52px);
+  font-weight:900;
+  line-height:1.2;
+  margin-bottom:12px;
+  background:linear-gradient(135deg,#fff 0%,var(--accent2) 50%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:fadeDown 0.8s ease;
+}
+.hero p{
+  color:var(--text2);font-size:16px;
+  animation:fadeDown 1s ease;
+}
+
+/* Nav tabs */
+nav{
+  display:flex;gap:0;
+  overflow-x:auto;
+  border-top:1px solid var(--border);
+  scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+.nav-btn{
+  flex:0 0 auto;
+  padding:14px 22px;
+  background:transparent;
+  border:none;
+  color:var(--text2);
+  font-family:'Tajawal',sans-serif;
+  font-size:14px;font-weight:500;
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  transition:all 0.3s;
+  white-space:nowrap;
+}
+.nav-btn:hover{color:var(--text);background:var(--glow)}
+.nav-btn.active{
+  color:var(--accent2);
+  border-bottom-color:var(--accent2);
+  background:rgba(0,229,255,0.05);
+}
+
+/* Global search */
+.global-search-wrap{
+  background:rgba(10,14,26,0.85);
+  border-bottom:1px solid var(--border);
+  padding:10px 20px;
+  backdrop-filter:blur(10px);
+  position:sticky;top:0;z-index:9;
+}
+.global-search-inner{
+  max-width:1100px;margin:0 auto;
+  position:relative;display:flex;align-items:center;gap:10px;
+}
+.global-search-input{
+  flex:1;
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:9px 44px 9px 14px;
+  color:var(--text);
+  font-family:'Tajawal',sans-serif;
+  font-size:14px;
+  outline:none;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.global-search-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(79,143,255,0.1);
+}
+.global-search-input::placeholder{color:var(--text2)}
+.global-search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--text2);font-size:16px;pointer-events:none;
+}
+.search-count{
+  font-size:12px;color:var(--accent);white-space:nowrap;flex-shrink:0;
+  display:none;
+}
+.clear-search{
+  background:rgba(79,143,255,0.15);border:none;
+  color:var(--accent2);border-radius:8px;
+  padding:6px 10px;cursor:pointer;font-size:13px;
+  display:none;transition:background 0.2s;flex-shrink:0;
+}
+.clear-search:hover{background:rgba(79,143,255,0.25)}
+.card.hidden{display:none!important}
+.acc-item.hidden{display:none!important}
+.no-results-msg{
+  text-align:center;padding:50px 20px;
+  color:var(--text2);font-size:15px;display:none;
+}
+.no-results-msg .nr-icon{font-size:40px;margin-bottom:12px}
+
+/* Footer */
+footer{
+  position:relative;z-index:1;
+  background:var(--card);
+  border-top:1px solid var(--border);
+  padding:30px 20px;
+  text-align:center;
+  margin-top:10px;
+}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-divider{
+  width:60px;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:2px;
+  margin:0 auto 14px;
+}
+.footer-name{
+  font-family:'Cairo',sans-serif;
+  font-size:18px;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),#f97316);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:6px;
+}
+.footer-copy{font-size:13px;color:var(--text2);}
+
+/* Main layout */
+main{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:30px 16px 40px;
+}
+
+/* Section */
+.section{display:none;animation:fadeIn 0.4s ease}
+.section.active{display:block}
+
+/* Cards grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:20px;margin-top:20px;
+}
+.grid.single{grid-template-columns:1fr}
+
+/* Card */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+  transition:all 0.3s;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(79,143,255,0.03),transparent);
+  pointer-events:none;
+}
+.card:hover{
+  border-color:rgba(79,143,255,0.4);
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(79,143,255,0.1);
+}
+.card-title{
+  font-family:'Cairo',sans-serif;
+  font-size:17px;font-weight:700;
+  color:var(--accent2);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.card-title .icon{
+  width:32px;height:32px;
+  background:rgba(0,229,255,0.1);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+
+/* Term definition style */
+.term{
+  margin-bottom:14px;
+  padding-bottom:14px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.term:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.term-name{
+  font-weight:700;color:var(--gold);
+  font-size:15px;margin-bottom:5px;
+}
+.term-def{
+  color:var(--text2);font-size:14px;line-height:1.7;
+}
+
+/* Formula */
+.formula-box{
+  background:rgba(79,143,255,0.08);
+  border:1px solid rgba(79,143,255,0.2);
+  border-radius:10px;
+  padding:12px 16px;
+  margin:10px 0;
+  font-family:monospace;
+  font-size:15px;
+  color:var(--accent2);
+  text-align:center;
+}
+
+/* Section title */
+.section-title{
+  font-family:'Cairo',sans-serif;
+  font-size:22px;font-weight:800;
+  color:#fff;
+  margin-bottom:6px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-title::after{
+  content:'';flex:1;
+  height:1px;background:var(--border);
+}
+.section-subtitle{
+  color:var(--text2);font-size:14px;margin-bottom:24px;
+}
+
+/* List items */
+.list-item{
+  display:flex;gap:10px;align-items:flex-start;
+  margin-bottom:10px;
+  color:var(--text2);font-size:14px;line-height:1.7;
+}
+.list-item .bullet{
+  width:6px;height:6px;
+  background:var(--accent);
+  border-radius:50%;margin-top:8px;flex-shrink:0;
+}
+
+/* Comparison table */
+.compare-table{
+  width:100%;border-collapse:collapse;margin-top:10px;
+  font-size:13px;
+}
+.compare-table th{
+  background:rgba(79,143,255,0.15);
+  color:var(--accent2);
+  padding:10px 14px;
+  text-align:right;font-weight:700;
+  border:1px solid var(--border);
+}
+.compare-table td{
+  padding:9px 14px;color:var(--text2);
+  border:1px solid rgba(255,255,255,0.05);
+  line-height:1.6;
+}
+.compare-table tr:hover td{background:rgba(79,143,255,0.04)}
+
+/* Chip tags */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{
+  padding:4px 12px;
+  background:rgba(79,143,255,0.1);
+  border:1px solid rgba(79,143,255,0.25);
+  border-radius:20px;
+  font-size:12px;color:var(--accent);
+}
+
+/* Accordion */
+.accordion{margin-top:16px}
+.acc-item{
+  border:1px solid var(--border);
+  border-radius:10px;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.acc-header{
+  padding:14px 18px;
+  background:var(--card2);
+  cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:600;font-size:14px;color:var(--text);
+  transition:background 0.2s;
+}
+.acc-header:hover{background:rgba(79,143,255,0.1)}
+.acc-header .arrow{
+  transition:transform 0.3s;
+  color:var(--accent);font-size:18px;
+}
+.acc-item.open .arrow{transform:rotate(180deg)}
+.acc-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease;
+  background:var(--card);
+}
+.acc-body.open{max-height:800px}
+.acc-content{padding:16px 18px;color:var(--text2);font-size:14px;line-height:1.8}
+
+/* Scientists */
+.scientist-card{
+  display:flex;gap:16px;align-items:flex-start;
+}
+.sci-avatar{
+  width:52px;height:52px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+}
+.sci-name{font-weight:700;color:var(--gold);font-size:16px;margin-bottom:4px}
+.sci-year{font-size:12px;color:var(--accent);margin-bottom:8px}
+.sci-info{color:var(--text2);font-size:13px;line-height:1.7}
+
+/* Info badge */
+.info-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,158,11,0.1);
+  border:1px solid rgba(245,158,11,0.3);
+  border-radius:8px;padding:6px 12px;
+  font-size:12px;color:var(--gold);margin-bottom:12px;
+}
+
+/* Search */
+.search-wrap{
+  position:relative;margin-bottom:24px;
+}
+.search-input{
+  width:100%;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 48px 12px 16px;
+  color:var(--text);
+  font-family:'Tajawal',sans-serif;
+  font-size:15px;
+  outline:none;
+  transition:border-color 0.3s;
+}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text2)}
+.search-icon{
+  position:absolute;left:16px;top:50%;transform:translateY(-50%);
+  color:var(--text2);font-size:18px;pointer-events:none;
+}
+
+/* Stats row */
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:14px;margin-bottom:28px;
+}
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;padding:16px;text-align:center;
+}
+.stat-num{
+  font-size:26px;font-weight:800;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  display:block;
+}
+.stat-lbl{color:var(--text2);font-size:12px;margin-top:4px}
+
+/* Animations */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Responsive */
+@media(max-width:600px){
+  .hero{padding:36px 16px 28px}
+  .grid{grid-template-columns:1fr}
+  .nav-btn{padding:12px 14px;font-size:13px}
+  .card{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hero">
+    <div class="hero-badge">⚡ فيزياء · مراجعة شاملة</div>
+    <h1>المراجعة النهائية في الفيزياء</h1>
+    <p>جميع المصطلحات · القوانين · المقارنات · إسهامات العلماء</p>
+  </div>
+  <nav id="mainNav">
+    <button class="nav-btn active" onclick="showSection('terms',this)">📖 المصطلحات</button>
+    <button class="nav-btn" onclick="showSection('laws',this)">⚖️ القوانين</button>
+    <button class="nav-btn" onclick="showSection('properties',this)">✨ الخصائص</button>
+    <button class="nav-btn" onclick="showSection('why',this)">🔍 علل</button>
+    <button class="nav-btn" onclick="showSection('compare',this)">↔️ مقارنات</button>
+    <button class="nav-btn" onclick="showSection('scientists',this)">🔬 العلماء</button>
+    <button class="nav-btn" onclick="showSection('circuits',this)">🔌 الدوائر</button>
+    <button class="nav-btn" onclick="showSection('uses',this)">💡 الاستخدامات</button>
+  </nav>
+</header>
+
+<!-- Global Search Bar -->
+<div class="global-search-wrap">
+  <div class="global-search-inner">
+    <span class="global-search-icon">🔍</span>
+    <input class="global-search-input" type="text" id="globalSearch" placeholder="ابحث في جميع الأقسام... (مصطلح، قانون، تعليل...)" oninput="globalFilter()">
+    <span class="search-count" id="searchCount"></span>
+    <button class="clear-search" id="clearBtn" onclick="clearSearch()">✕ مسح</button>
+  </div>
+</div>
+
+<main>
+<div class="no-results-msg" id="noResultsMsg">
+  <div class="nr-icon">🔎</div>
+  لا توجد نتائج للبحث عن "<span id="noResultsQuery"></span>"
+</div>
+
+<!-- TERMS -->
+<div id="terms" class="section active">
+  <div class="stats">
+    <div class="stat"><span class="stat-num">25+</span><div class="stat-lbl">مصطلح</div></div>
+    <div class="stat"><span class="stat-num">15+</span><div class="stat-lbl">قانون</div></div>
+    <div class="stat"><span class="stat-num">8</span><div class="stat-lbl">علماء</div></div>
+    <div class="stat"><span class="stat-num">5</span><div class="stat-lbl">وحدات قياس</div></div>
+  </div>
+
+
+
+  <div class="section-title">⚡ الكهرباء والمجالات</div>
+  <p class="section-subtitle">تعريفات أساسية في الكهرباء الساكنة والتيار</p>
+
+  <div class="grid" id="termsGrid">
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">⚡</div>المجال الكهربي</div>
+      <div class="term-def">هو الحيز أو المنطقة المحيطة بالشحنة الكهربية في جميع الاتجاهات، ويظهر في هذه المنطقة تأثير تلك الشحنة.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">📐</div>شدة المجال الكهربي (E)</div>
+      <div class="term-def">هو مقدار القوة بالنيوتن المؤثرة على شحنة مقدارها 1 كولوم موضوعة عند تلك النقطة.</div>
+      <div class="formula-box">E = F/q (نيوتن/كولوم)</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">⚖️</div>نقطة التعادل</div>
+      <div class="term-def">هي النقطة التي ينعدم عندها المجال الكهربي.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🔋</div>الجهد الكهربي</div>
+      <div class="term-def">الحالة الكهربية لهذا الموصل والتي يتوقف عليها انتقال الكهرباء منه أو إليه عند اتصاله بجسم آخر.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">⚡</div>فرق الجهد (V)</div>
+      <div class="term-def">مقدار الشغل المبذول بالجول لنقل شحنة كهربية مقدارها 1 كولوم بين نقطتين.</div>
+      <div class="formula-box">1 فولت = 1 جول / 1 كولوم</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🔌</div>القوة الدافعة الكهربية</div>
+      <div class="term-def">هي الشغل الكلي اللازم لنقل كمية من الكهربية قدرها 1 كولوم في الدائرة الكهربية داخل المصدر وخارجه.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">💾</div>سعة المكثف (C)</div>
+      <div class="term-def">النسبة بين الشحنة الكهربية التي يختزنها المكثف إلى جهد ذلك الموصل.</div>
+      <div class="formula-box">C = Q/V (فاراد)</div>
+      <div class="term-def" style="margin-top:8px">الطاقة المختزنة في المكثف = ½ C V²</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🌊</div>التيار الكهربي</div>
+      <div class="term-def">هو فيض من الإلكترونات الحرة التي تسري خلال موصل من القطب السالب إلى القطب الموجب للعمود الكهربي.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">📊</div>شدة التيار الكهربي (I)</div>
+      <div class="term-def">تقدر شدة التيار الكهربي بكمية الكهربية (Q) التي تمر عبر مقطع معين من الموصل في زمن (t) قدره ثانية واحدة.</div>
+      <div class="formula-box">I = Q/t (أمبير)</div>
+      <div class="term-def" style="margin-top:8px"><strong>الأمبير:</strong> هو شدة التيار الكهربي الماز في موصل عندما يكون معدل سريان كمية الكهربية خلال مقطع معين من الموصل يساوي 1 كولوم/ثانية.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🚧</div>المقاومة الكهربية (R)</div>
+      <div class="term-def">هي خاصية ممانعة الموصل لمرور التيار الكهربي مما يؤدي إلى ارتفاع في درجة حرارته. يُرمز لها بـ (R) وتقاس بوحدة الأوم.</div>
+      <div class="formula-box">R = V/I (أوم)</div>
+      <div class="term-def" style="margin-top:8px"><strong>الأوم:</strong> هو مقاومة موصل يسمح بمرور تيار شدته 1 أمبير عندما يكون فرق الجهد بين طرفي هذا الموصل 1 فولت.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🧬</div>المقاومة النوعية (ρ)</div>
+      <div class="term-def">هي مقاومة موصل طوله 1 متر ومساحة مقطعه 1 متر مربع. وتعتبر المقاومة النوعية خاصية فيزيائية للمادة.</div>
+      <div class="formula-box">ρ = RA/L (أوم.متر)</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">⚡</div>التوصيلية الكهربية (σ)</div>
+      <div class="term-def">هي مقلوب المقاومة النوعية للمادة.</div>
+      <div class="formula-box">σ = L/RA (أوم⁻¹.متر⁻¹)</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🔵</div>الفيض المغناطيسي (Φ)</div>
+      <div class="term-def">يقدر الفيض المغناطيسي بالعدد الكلي لخطوط الفيض التي تمر عمودياً على مساحة معينة. ويقاس بوحدة الويبر.</div>
+      <div class="formula-box">Φ = β × A (ويبر)</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🧲</div>كثافة الفيض المغناطيسي (β)</div>
+      <div class="term-def">تقدر بالعدد الكلي لخطوط الفيض التي تمر عمودياً على وحدة المساحات المحيطة بتلك النقطة.</div>
+      <div class="term-def" style="margin-top:8px"><strong>التسلا:</strong> كثافة الفيض التي تولد قوة مقدارها واحد نيوتن على سلك طوله 1 متر ويحمل تياراً شدته 1 أمبير عندما يكون السلك عمودياً على اتجاه المجال المغناطيسي.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">☢️</div>الأشعة السينية (X)</div>
+      <div class="term-def">أشعة كهرومغناطيسية غير مرئية، طولها الموجي قصير جداً (بين 10⁻⁸ و 10⁻¹³ متر). تقع بين الأشعة فوق البنفسجية وأشعة جاما. عالية الطاقة جداً.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">💡</div>الليزر (LASER)</div>
+      <div class="term-def">اختصار للحروف الأولى من عبارة بالإنجليزية تعني "تضخيم (أو تكبير) شدة الضوء بواسطة الانبعاث المستحث".</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🔧</div>النبائط الإلكترونية</div>
+      <div class="term-def">هي وحدات البناء التي تبنى عليها كل الأنظمة الإلكترونية. وهي نوعان:
+        <br>• <strong>مكونات بسيطة:</strong> مثل المقاومة والمفتاح والمكثف
+        <br>• <strong>مكونات معقدة:</strong> الوصلة الثنائية والترانزستور</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">💻</div>الإلكترونيات</div>
+      <div class="term-def">هي فرع الفيزياء الذي يهتم بدراسة الأنظمة الإلكترونية التي تتعامل مع نظام العد الثنائي (0 و 1) الرقمية.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🔷</div>الوصلة الثنائية (الديود)</div>
+      <div class="term-def">عبارة عن بلورة مزدوجة تتكون من بلورتين إحداهما موجبة (P) والأخرى سالبة (N) بينهما سطح فاصل.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">📡</div>الأجهزة التناظرية</div>
+      <div class="term-def">هي الأجهزة التي تتعامل مع الكميات الطبيعية وتحولها إلى إشارات كهربية متصلة (مثل: الأعداد العشرية - الحروف - الصوت في الميكروفون).</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">💾</div>الأجهزة الرقمية</div>
+      <div class="term-def">هي التي تتعامل مع قيمتين فقط (0, 1). لا يوجد هامش للخطأ - إما نعم أو لا. لا تتأثر بالضوضاء الكهربية.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🔬</div>الدوائر المتكاملة (IC)</div>
+      <div class="term-def">هي شريحة جاهزة من السيليكون تُجمع عليها في أماكن محددة كل المكونات الإلكترونية المطلوبة مثل الترانزستور.</div>
+    </div>
+
+    <div class="card term-card">
+      <div class="card-title"><div class="icon">🔗</div>الجهد الحاجز في الوصلة الثنائية</div>
+      <div class="term-def">هو فرق الجهد المتولد بين البلورة (N) والبلورة (P) نتيجة عبور بعض الإلكترونات من بلورة (N) إلى بلورة (P) والذي يعمل على منع عبور المزيد من هذه الإلكترونات.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LAWS -->
+<div id="laws" class="section">
+  <div class="section-title">⚖️ القوانين والمعادلات</div>
+  <p class="section-subtitle">جميع قوانين الفيزياء مع المعادلات الرياضية</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🌐</div>قانون كولوم</div>
+      <div class="term-def">قوة التجاذب والتنافر بين شحنتين تتناسب طردياً مع حاصل ضرب الشحنتين وعكسياً مع مربع المسافة بينهما.</div>
+      <div class="formula-box">F = K · q₁ · q₂ / d²  (نيوتن)</div>
+      <div class="chips"><span class="chip">K = 9×10⁹ N·m²/C²</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">📐</div>شدة المجال الكهربي عند نقطة</div>
+      <div class="formula-box">E = F/q = K·q / d²  (نيوتن/كولوم)</div>
+      <div class="term-def">كمية متجهة (لها مقدار واتجاه).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">⚡</div>فرق الجهد بين نقطتين (V)</div>
+      <div class="formula-box">V = K·q / d  (فولت)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">💾</div>سعة المكثف</div>
+      <div class="formula-box">C = (1/4π) × (μA/d)  (فاراد)</div>
+      <div class="formula-box">الطاقة = ½ × C × V²</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔌</div>المقاومة الكهربية</div>
+      <div class="formula-box">R = ρ·L / A  (أوم)</div>
+      <div class="formula-box">ρ = R·A / L  (أوم.متر)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">⚖️</div>قانون أوم</div>
+      <div class="term-def">شدة التيار الكهربي (I) التي تمر في موصل تتناسب مع فرق الجهد (V) بين طرفيه — بشرط ثبوت درجة حرارة هذا الموصل.</div>
+      <div class="formula-box">V = I · R</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🧲</div>كثافة الفيض المغناطيسي عند نقطة تبعد (d) من سلك</div>
+      <div class="formula-box">β = μI / (2πd)  (تسلا)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔵</div>كثافة الفيض عند مركز ملف دائري</div>
+      <div class="formula-box">β = μNI / (2r)  (تسلا)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🌀</div>كثافة الفيض داخل الملف اللولبي</div>
+      <div class="formula-box">β = μNI / L  (تسلا)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">💪</div>القوة المؤثرة على سلك يحمل تيار كهربي</div>
+      <div class="term-def">عندما يكون السلك عمودياً على اتجاه المجال:</div>
+      <div class="formula-box">F = β · I · ℓ  (نيوتن)</div>
+      <div class="term-def">عندما يميل السلك بزاوية θ على المجال:</div>
+      <div class="formula-box">F = β · I · L · sin θ  (نيوتن)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔗</div>التوصيلية الكهربية</div>
+      <div class="formula-box">σ = L / (R·A) = 1/ρ  (أوم⁻¹.متر⁻¹)</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🌊</div>الفيض المغناطيسي</div>
+      <div class="formula-box">Φ = β × A  (ويبر)</div>
+    </div>
+
+  </div>
+
+  <div class="section-title" style="margin-top:30px">🔌 توصيل المكثفات والمقاومات</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-title"><div class="icon">➕</div>توصيل المكثفات على التوازي</div>
+      <div class="info-badge">⭐ الغرض: الحصول على سعة كبيرة من عدة سعات صغيرة</div>
+      <div class="formula-box">C_T = C₁ + C₂ + C₃</div>
+      <div class="term-def">V = V₁ = V₂ = V₃</div>
+      <div class="term-def">q = q₁ + q₂ + q₃</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">➖</div>توصيل المكثفات على التوالي</div>
+      <div class="info-badge">⭐ الغرض: الحصول على سعة صغيرة من عدة سعات كبيرة</div>
+      <div class="formula-box">1/C_T = 1/C₁ + 1/C₂ + 1/C₃</div>
+      <div class="term-def">q = q₁ = q₂ = q₃</div>
+      <div class="term-def">V = V₁ + V₂ + V₃</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">➕</div>توصيل المقاومات على التوالي</div>
+      <div class="formula-box">R_T = R₁ + R₂ + R₃</div>
+      <div class="term-def">I₁ = I₂ = I₃ = I_T</div>
+      <div class="term-def">إذا تساوت: R_T = n × R</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">➖</div>توصيل المقاومات على التوازي</div>
+      <div class="formula-box">1/R_T = 1/R₁ + 1/R₂ + 1/R₃</div>
+      <div class="term-def">V_T = V₁ = V₂ = V₃</div>
+      <div class="term-def">إذا تساوت: R_T = R/n</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROPERTIES -->
+<div id="properties" class="section">
+  <div class="section-title">✨ خصائص ومميزات</div>
+  <p class="section-subtitle">خصائص المجالات والأشعة والليزر والترانزستور</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title"><div class="icon">⚡</div>خصائص خطوط المجال الكهربي</div>
+      <div class="list-item"><div class="bullet"></div>تتناسب شدة المجال الكهربي في نقطة ما تناسباً طردياً مع مقدار الشحنة.</div>
+      <div class="list-item"><div class="bullet"></div>خطوط المجال لا تتقاطع أبداً.</div>
+      <div class="list-item"><div class="bullet"></div>خطوط المجال الكهربي تخرج من الشحنة الموجبة وتدخل في الشحنة السالبة.</div>
+      <div class="list-item"><div class="bullet"></div>يدل اتجاه المماس لخط المجال عند أي نقطة على اتجاه المجال في تلك النقطة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">💾</div>خصائص السعة الكهربية لجسم</div>
+      <div class="list-item"><div class="bullet"></div>إنها دائماً موجبة.</div>
+      <div class="list-item"><div class="bullet"></div>ثابتة في المقدار للجسم الواحد.</div>
+      <div class="list-item"><div class="bullet"></div>تتوقف على الأبعاد الهندسية للجسم وكذلك الوسط الذي يوجد فيه هذا الجسم.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">☢️</div>خواص الأشعة السينية (X)</div>
+      <div class="list-item"><div class="bullet"></div>لا تتأثر بالمجالين الكهربي أو المغناطيسي.</div>
+      <div class="list-item"><div class="bullet"></div>ذات قدرة كبيرة على اختراق الأوساط.</div>
+      <div class="list-item"><div class="bullet"></div>ذات قدرة كبيرة على تأيين الغازات.</div>
+      <div class="list-item"><div class="bullet"></div>تُحيد في البلورات.</div>
+      <div class="list-item"><div class="bullet"></div>تؤثر على الألواح الفوتوغرافية الحساسة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">💡</div>خصائص أشعة الليزر</div>
+      <div class="list-item"><div class="bullet"></div><strong>النقاء الطيفي:</strong> تنتج خطاً طيفياً واحداً (ضوء أحادي الطول الموجي).</div>
+      <div class="list-item"><div class="bullet"></div><strong>توازي الحزمة الضوئية:</strong> قطر الحزمة يظل ثابتاً أثناء الانتشار - لا تعاني من تشتت.</div>
+      <div class="list-item"><div class="bullet"></div><strong>الترابط:</strong> الفوتونات تنطلق بصورة مترابطة زمانياً ومكانياً.</div>
+      <div class="list-item"><div class="bullet"></div><strong>الشدة:</strong> لا تخضع لقانون التربيع العكسي.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔷</div>تمييز الوصلة الثنائية عن الصمام الثنائي</div>
+      <div class="list-item"><div class="bullet"></div>تحتاج لمصدر كهربي واحد منخفض الجهد.</div>
+      <div class="list-item"><div class="bullet"></div>لها سعة صغيرة جداً حوالي 1 بيكوفاراد.</div>
+      <div class="list-item"><div class="bullet"></div>مقاومتها في حالة التوصيل الأمامي أقل من مقاومة الصمام الثنائي.</div>
+      <div class="list-item"><div class="bullet"></div>يمكن توصيلها بسهولة في الدوائر الكهربية.</div>
+      <div class="list-item"><div class="bullet"></div>صغيرة الحجم وخفيفة الوزن.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">📱</div>مميزات الترانزستور على الصمام الثلاثي</div>
+      <div class="list-item"><div class="bullet"></div>صغر حجمه وقلة وزنه.</div>
+      <div class="list-item"><div class="bullet"></div>عمره أطول من عمر الصمامات ذات الفتائل.</div>
+      <div class="list-item"><div class="bullet"></div>لا يتلف بالاهتزازات الميكانيكية.</div>
+      <div class="list-item"><div class="bullet"></div>لا يحتاج إلى وقت لتسخين فتائل الصمامات فيبدأ في العمل فوراً.</div>
+      <div class="list-item"><div class="bullet"></div>يحتاج في عمله إلى قدرة كهربية أقل كثيراً مما يحتاجه الصمام.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔌</div>شروط مرور تيار كهربي في دائرة كهربية</div>
+      <div class="list-item"><div class="bullet"></div>وجود مصدر كهربي مثل عمود كهربي أو بطارية.</div>
+      <div class="list-item"><div class="bullet"></div>أن تكون الدائرة الكهربية مغلقة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔧</div>أنواع المقاومات</div>
+      <div class="list-item"><div class="bullet"></div><strong>المقاومات الثابتة:</strong> هي المقاومة التي يكون لها قيمة ثابتة.</div>
+      <div class="list-item"><div class="bullet"></div><strong>المقاومات المتغيرة (الريوستات):</strong> وهي تلك المقاومات التي يمكن تغيير قيمتها وتدمج في الدوائر الكهربائية للتحكم في شدة التيار الكهربي الماز في تلك الدائرة.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- WHY -->
+<div id="why" class="section">
+  <div class="section-title">🔍 علل لما يأتي</div>
+  <p class="section-subtitle">أسئلة التعليل مع الإجابات الكاملة</p>
+
+  <div class="accordion">
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>تتكون النواة وكتلتها في المنتصف</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأنها تتركز فيها معظم كتلة الذرة.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>الذرة ديناميكية في تكوينها والإلكترونات تتحرك بسرعة كبيرة حول النواة</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن النواة اجتذبتها، ولو كانت ساكنة لانجذبت للنواة.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>الذرة متعادلة كهربياً</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن عدد الإلكترونات السالبة يساوي عدد الشحنات الموجبة.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>معظم حجم الذرة فراغ</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن الحجم الذي تشغله النواة والإلكترونات ضئيل جداً بالنسبة لحجم الذرة نفسها.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>لمس قرص الكشاف باليد</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">تتسرب الشحنة إلى الأرض وتنطبق ورقتا الكشاف.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>تقريب ساق مشحونة بشحنة موجبة من قرص الكشاف</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">تنفرز ورقتا الذهب ويُشحن الكشاف بنفس شحنة الساق.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>تكون القوة المتبادلة بين الشحنتين للربع عندما تزيد المسافة بينهما للضعف</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن القوة تتناسب عكسياً مع مربع المسافة.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>المجال الكهربي كمية متجهة بينما الجهد الكهربي كمية قياسية</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن المجال الكهربي يحدد مقداراً واتجاهاً، بينما الجهد الكهربي يحدد مقداراً فقط.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>تزداد سعة المكثف كلما زادت مساحة سطح لوحيه</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن السعة تتناسب طردياً مع مساحة لوحيه.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>يُستخدم الريوستات (المقاومة المتغيرة) في الدائرة الكهربية</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">للتحكم في شدة التيار الماز في الدائرة.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>عدم تحرك موصل يمر به تيار موضوع في مجال مغناطيسي</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن الموصل في هذه الحالة موازٍ لخطوط المجال وبذلك الزاوية تكون صفر والقوة تكون صفر.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>تقل كثافة الفيض عند مركز الملف الدائري كلما زاد نصف القطر</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن كثافة الفيض تتناسب عكسياً مع نصف قطر الملف.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>كلما زاد طول السلك زادت مقاومته</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن زيادة طول السلك يعتبر توصيلاً على التوالي فتزيد المقاومة.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>توصيل المصابيح والأجهزة الكهربية في المنزل على التوازي</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">حتى إذا تلف مصباح أو جهاز تعمل باقي الأجهزة على نفس الجهد وحتى يكون فرق الجهد واحد بين طرفي كل منهما - لتقليل المقاومة الكلية فلا يتأثر التيار.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>يوصل الأميتر على التوالي ويوصل الفولتميتر على التوازي</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">حتى يمر في الأميتر نفس التيار في الدائرة حيث إن شدة التيار متساوية في أجزاء الدائرة، وفي الفولتميتر لكي يكون فرق الجهد بين طرفي الفولتميتر مساوياً لفرق الجهد المراد قياسه.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>خطورة التعرض لجرعات كبيرة من الأشعة السينية</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">
+        1- تؤثر على الجينات الموجودة بالخلايا وقد تؤدي إلى موت الخلايا.<br>
+        2- تؤدي إلى نمو غير طبيعي لبعض الخلايا لأنها تسبب اضطرابات في التفاعلات الكيميائية الحيوية داخل الخلايا.<br>
+        3- تحدث تشوهات في الأجنة وخاصة في الأشهر الأولى للحمل.
+      </div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>يتميز الليزر بالترابط</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن الفوتونات تنطلق منه بصورة مترابطة زمانياً ومكانياً وتحتفظ فيها بفرق طور ثابت أثناء الانتشار لمسافات طويلة وهذا يجعلها أكثر شدة وأكثر تركيزاً.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>تحتفظ أشعة الليزر بشدة ثابتة مع المسافة التي يقطعها بعكس أشعة الضوء العادي</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لأن قطر الحزمة الضوئية يظل ثابت الانتشار ولا يعاني من التشتت - ولأنها لا تخضع لقانون التربيع العكسي.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>اختيار عنصري الهيليوم والنيون في أشعة الليزر</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">نظراً لتقارب قيم طاقة مستويات الإثارة شبه المستقرة في كل منهما.</div></div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)">
+        <span>في الترانزستور تستهلك القاعدة جزءاً قليلاً من تيار الباعث</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="acc-body"><div class="acc-content">لصغر سُمك القاعدة.</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- COMPARE -->
+<div id="compare" class="section">
+  <div class="section-title">↔️ مقارنات</div>
+  <p class="section-subtitle">جداول المقارنة بين المفاهيم المتشابهة</p>
+
+  <div class="grid single">
+
+    <div class="card">
+      <div class="card-title"><div class="icon">⚡</div>مقارنة: الشحن بالتأثير vs الشحن باللمس</div>
+      <table class="compare-table">
+        <tr><th>وجه المقارنة</th><th>الشحن بالتأثير</th><th>الشحن باللمس</th></tr>
+        <tr><td>التلامس</td><td>تقريب دون تلامس جسم كافٍ</td><td>تقريب وتلامس جسم مشابه</td></tr>
+        <tr><td>نوع الشحنة الناتجة</td><td>شحنة مخالفة للجسم المُشحِّن</td><td>شحنة مماثلة للجسم المُشحِّن</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">📊</div>مقارنة: الأميتر vs الفولتميتر</div>
+      <table class="compare-table">
+        <tr><th>وجه المقارنة</th><th>الأميتر</th><th>الفولتميتر</th></tr>
+        <tr><td>التوصيل في الدائرة</td><td>على التوالي</td><td>على التوازي</td></tr>
+        <tr><td>ما يقيسه</td><td>شدة التيار</td><td>فرق الجهد</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔷</div>مقارنة: البلورة السالبة (N) vs البلورة الموجبة (P)</div>
+      <table class="compare-table">
+        <tr><th>وجه المقارنة</th><th>البلورة السالبة (N)</th><th>البلورة الموجبة (P)</th></tr>
+        <tr><td>التركيب</td><td>بلورة سيليكون مُطعَّمة بعنصر من المجموعة A5 مثل الزرنيخ</td><td>بلورة سيليكون مُطعَّمة بعنصر من المجموعة A3 مثل الجاليوم</td></tr>
+        <tr><td>التوصيلية</td><td>أكثر من السيليكون النقي بسبب وجود حاملات الشحنة السالبة (إلكترونات)</td><td>أكثر من السيليكون بسبب وجود حاملات الشحنة الموجبة (الفجوات)</td></tr>
+        <tr><td>التعادل الكهربي</td><td>متعادلة كهربياً</td><td>متعادلة كهربياً</td></tr>
+        <tr><td>حاملات الشحنة</td><td>إلكترونات سالبة</td><td>فجوات موجبة</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">📡</div>مقارنة: الأجهزة التناظرية vs الأجهزة الرقمية</div>
+      <table class="compare-table">
+        <tr><th>وجه المقارنة</th><th>الأجهزة التناظرية</th><th>الأجهزة الرقمية</th></tr>
+        <tr><td>نوع الإشارة</td><td>متصلة (مستمرة)</td><td>منفصلة (0 أو 1)</td></tr>
+        <tr><td>التأثر بالضوضاء</td><td>تتأثر بالضوضاء الكهربية</td><td>لا تتأثر بالضوضاء الكهربية</td></tr>
+        <tr><td>هامش الخطأ</td><td>يوجد هامش للخطأ</td><td>لا يوجد هامش للخطأ</td></tr>
+        <tr><td>الدقة</td><td>أقل دقة</td><td>أكثر دقة</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">💡</div>مقارنة: الانبعاث المُستحَث vs الانبعاث التلقائي</div>
+      <table class="compare-table">
+        <tr><th>وجه المقارنة</th><th>الانبعاث المُستحَث (ليزر)</th><th>الانبعاث التلقائي (ضوء عادي)</th></tr>
+        <tr><td>التعريف</td><td>الإشعاع الناتج عن انتقال الذرة المثارة من مستوى الإثارة إلى مستوى أخر أقل منه في الطاقة قبل انتهاء فترة العمر وذلك بتأثير سقوط فوتون له نفس طاقة الفوتون المنطلق</td><td>الإشعاع الناتج عن انتقال الذرة من مستوى الإثارة إلى مستوى آخر أقل منه في الطاقة بعد انتهاء فترة العمر تلقائياً وبدون أي مؤثر خارجي</td></tr>
+        <tr><td>الترابط</td><td>مترابطة زمانياً ومكانياً</td><td>غير مترابطة زمانياً ولا مكانياً</td></tr>
+        <tr><td>الطول الموجي</td><td>فوتونات منبعثة طول موجي واحد فقط</td><td>فوتونات منبعثة تغطي مدى كبير من الأطوال الموجية</td></tr>
+        <tr><td>الشدة وقانون التربيع العكسي</td><td>تظل شدة الأشعة ثابتة أثناء انتشارها (لا تخضع لقانون التربيع العكسي)</td><td>تقل شدة الأشعة أثناء الانتشار (تخضع لقانون التربيع العكسي)</td></tr>
+        <tr><td>عدد الفوتونات</td><td>يوجد فوتونان (الأصلي + المُستحَث)</td><td>يوجد فوتون واحد</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🧲</div>مقارنة: المجال المغناطيسي في ملف حلزوني vs سلك مستقيم</div>
+      <table class="compare-table">
+        <tr><th>شكل خطوط الفيض المغناطيسي</th><th>الملف الحلزوني</th><th>السلك المستقيم</th></tr>
+        <tr><td>الشكل</td><td>يكون على هيئة خطوط متوازية وذلك عند قوز الملف</td><td>يكون على شكل دوائر حول السلك المستقيم ويكون مركز هذه الدوائر هو السلك نفسه</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔧</div>مقارنة: قاعدة اليد اليمنى لأمبير vs قاعدة اليد اليسرى لفلمنج</div>
+      <table class="compare-table">
+        <tr><th>وجه المقارنة</th><th>قاعدة اليد اليمنى لأمبير</th><th>قاعدة اليد اليسرى لفلمنج</th></tr>
+        <tr><td>الاستخدام</td><td>لتحديد اتجاه التيار واتجاه خطوط الفيض المغناطيسي في سلك مستقيم</td><td>لتحديد اتجاه القوة التي يؤثر بها مجال مغناطيسي على سلك يحمل تياراً كهربياً موضوعاً عمودياً على اتجاه المجال</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">📐</div>مقارنة: قاعدة اليد اليمنى لملف دائري vs للسلك المستقيم</div>
+      <table class="compare-table">
+        <tr><th>المقارنة</th><th>في ملف دائري</th><th>في سلك مستقيم</th></tr>
+        <tr><td>قاعدة البريمة</td><td>يُشير اتجاه دورانها إلى اتجاه التيار في الملف ويدل اتجاه اندفاع البريمة على اتجاه المجال المغناطيسي عند مركز الملف</td><td>يكون اتجاه اندفاعها يشير إلى اتجاه التيار الكهربي الماز في السلك المستقيم ويكون اتجاه دوران هذه البريمة يشير إلى اتجاه خطوط الفيض المغناطيسي</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCIENTISTS -->
+<div id="scientists" class="section">
+  <div class="section-title">🔬 إسهامات العلماء</div>
+  <p class="section-subtitle">أبرز العلماء وإسهاماتهم في مجال الفيزياء</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="scientist-card">
+        <div class="sci-avatar">⚡</div>
+        <div>
+          <div class="sci-name">كولوم (Coulomb)</div>
+          <div class="sci-year">القرن الثامن عشر</div>
+          <div class="sci-info">وضع قانون التجاذب والتنافر. وجد العالم كولوم أن القوة المتبادلة (F) بين شحنتين كهربيتين تتناسب طردياً مع حاصل ضرب كل من الشحنتين q₁ و q₂.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="scientist-card">
+        <div class="sci-avatar">🧲</div>
+        <div>
+          <div class="sci-name">أورستد (Oersted)</div>
+          <div class="sci-year">1820</div>
+          <div class="sci-info">في مطلع عام 1820 استطاع عالم الفيزياء أورستد — الذي كان يعمل في جامعة كوبنهاجن — إن للتيار الكهربي تأثيراً مغناطيسياً بعد أن وضع إبرة مغناطيسية أسفل سلك يحمل تياراً كهربياً فلاحظ انحراف الإبرة المغناطيسية مما يدل على أن مجالاً مغناطيسياً قد تولد حول السلك الذي يمر فيه التيار الكهربي.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="scientist-card">
+        <div class="sci-avatar">⚛️</div>
+        <div>
+          <div class="sci-name">ذرة طومسون</div>
+          <div class="sci-year">1898</div>
+          <div class="sci-info">وضع نموذجاً للذرة عبارة عن: الذرة عبارة عن كرة مصمتة من مادة مشحونة بكهربية موجبة تنغمس فيها الإلكترونات السالبة. الذرة متعادلة كهربياً فإن الشحنة السالبة التي تحملها الإلكترونات = الشحنة الموجبة التي تحملها الذرة.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="scientist-card">
+        <div class="sci-avatar">🔬</div>
+        <div>
+          <div class="sci-name">ذرة رذرفورد</div>
+          <div class="sci-year">1911</div>
+          <div class="sci-info">
+            1- تتكون الذرة من نواة موجبة تتركز فيها معظم كتلة الذرة.<br>
+            2- الذرة ديناميكية في تكوينها والإلكترونات تتحرك بسرعة كبيرة حول النواة.<br>
+            3- الذرة متعادلة كهربياً أي أن عدد الإلكترونات خارج النواة = عدد الشحنات الموجبة داخل النواة.<br>
+            4- معظم حجم الذرة فراغ.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="scientist-card">
+        <div class="sci-avatar">💫</div>
+        <div>
+          <div class="sci-name">نموذج ذرة بور</div>
+          <div class="sci-year">1913</div>
+          <div class="sci-info">
+            أ- توجد عند مركز الذرة نواة موجبة الشحنة.<br>
+            ب- تتحرك الإلكترونات السالبة الشحنة حول النواة في مدارات محددة تُعرف باسم الأغلفة لكل منها مستوى طاقة.<br>
+            ج- الذرة متعادلة كهربياً.<br>
+            <strong>الفروض الثلاثة:</strong><br>
+            1- إذا انتقل الكترون من مدار خارجي طاقته E₂ إلى مدار طاقته E₁ فإنه تنطلق نتيجة لذلك كمية من الإشعاع (فوتون) طاقته = E₂ - E₁ = hν<br>
+            2- القوى الكهربية (قانون كولوم) والقوى الميكانيكية (قانون نيوتن) قابلة للتطبيق في مجال الذرة.<br>
+            3- يمكن حساب نصف قطر المدار تقديرياً.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="scientist-card">
+        <div class="sci-avatar">🏆</div>
+        <div>
+          <div class="sci-name">العالم رونتجن</div>
+          <div class="sci-year">اكتشاف الأشعة السينية</div>
+          <div class="sci-info">سُميت الأشعة السينية بالأشعة المجهولة لأن أول من اخترعها هو العالم رونتجن ولم يعرف ماهيتها.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="scientist-card">
+        <div class="sci-avatar">⚛️</div>
+        <div>
+          <div class="sci-name">العالم بور - استخدام الهيدروجين</div>
+          <div class="sci-year">نموذج الذرة</div>
+          <div class="sci-info">استخدم العالم بور ذرة الهيدروجين — لأنها أصغر ذرة وأبسط ذرة يمكن أن يستخدمها.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CIRCUITS -->
+<div id="circuits" class="section">
+  <div class="section-title">🔌 الدوائر والتوصيل</div>
+  <p class="section-subtitle">أنواع التوصيل ومبادئ عمل الأجهزة</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔷</div>الوصلة الثنائية - التوصيل الأمامي</div>
+      <div class="term-def">وفيها توصل البلورة الموجبة (P) بالطرف الموجب للدائرة وتوصل البلورة السالبة (N) بالطرف السالب للدائرة.</div>
+      <div class="info-badge">✅ تمرر التيار</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔷</div>الوصلة الثنائية - التوصيل الخلفي</div>
+      <div class="term-def">وفيها توصل البلورة الموجبة (P) بالطرف السالب للدائرة وتوصل البلورة السالبة (N) بالطرف الموجب للدائرة.</div>
+      <div class="info-badge">❌ لا تمرر التيار</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🌊</div>الوصلة الثنائية - تقويم التيار المتردد</div>
+      <div class="term-def">تستخدم الوصلة الثنائية في تقويم التيار المتردد إلى تيار مستمر، وهو من أهم تطبيقاتها في الإلكترونيات.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">📱</div>الترانزستور - مكبر للإشارة</div>
+      <div class="term-def">يعمل الترانزستور كمكبر للإشارة. تيار الباعث = تيار القاعدة + تيار المجمع. إذ تستهلك القاعدة جزءاً قليلاً من تيار الباعث بسبب صغر سُمك القاعدة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🧮</div>الترانزستور - كمفتاح إلكتروني</div>
+      <div class="term-def">يستخدم الترانزستور كمفتاح إلكتروني في البوابات المنطقية (الأنظمة الرقمية). يمكن له إما أن يكون في حالة تشبع (مرور تيار) أو انقطاع (عدم مرور تيار).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔵</div>المواد الموصلة والعازلة وأشباه الموصلات</div>
+      <div class="list-item"><div class="bullet"></div><strong>المواد الموصلة:</strong> تتميز ذراتها بوفرة الإلكترونات الحرة بها ولذا فهي توصل التيار الكهربي.</div>
+      <div class="list-item"><div class="bullet"></div><strong>المواد العازلة:</strong> تتميز بندرة الإلكترونات الحرة بها ولذا فهي لا توصل التيار الكهربي.</div>
+      <div class="list-item"><div class="bullet"></div><strong>أشباه الموصلات:</strong> تتميز بأن درجة توصيلها تقع بين درجة توصيل المواد الموصلة والمواد العازلة مثل السيليكون (Si14) والجرمانيوم (Ge32).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🌡️</div>تأثير درجة الحرارة على التوصيلية الكهربية</div>
+      <div class="list-item"><div class="bullet"></div><strong>بلورة الجرمانيوم أو السيليكون:</strong> تزداد درجة التوصيل الكهربي بارتفاع درجة الحرارة (بعكس الموصلات).</div>
+      <div class="list-item"><div class="bullet"></div><strong>الموصلات العادية:</strong> تقل درجة التوصيل الكهربي بسبب زيادة المقاومة نتيجة ارتفاع درجة الحرارة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">⚗️</div>جهاز ليزر الهيليوم-نيون - التركيب</div>
+      <div class="list-item"><div class="bullet"></div>أنبوبة من الزجاج بها خليط من غاز الهيليوم وغاز النيون بنسبة 10:1 تحت ضغط منخفض حوالي 0.6 mmHg.</div>
+      <div class="list-item"><div class="bullet"></div>يوجد عند نهايتي الأنبوبة مرآتان مستويتان أو مقعرتان ومتوازيتان ومتعامدتان على محور الأنبوبة معامل انعكاس إحداهما 99.95% والأخرى شبه منفذة ومعامل انعكاسها 98%.</div>
+      <div class="list-item"><div class="bullet"></div>مجال كهربي عالي التردد يغذي الأنبوبة من الخارج لإثارة ذرات الهيليوم والنيون، أو فرق جهد كهربي عالٍ مستمر لإحداث تفريغ كهربي.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">💡</div>جهاز ليزر الهيليوم-نيون - عمل الجهاز</div>
+      <div class="list-item"><div class="bullet"></div>يؤدي فرق الجهد الكهربي داخل الأنبوبة إلى إثارة ذرات الهيليوم إلى مستويات الطاقة العليا.</div>
+      <div class="list-item"><div class="bullet"></div>تصطدم ذرات الهيليوم بذرات نيون غير المثارة تصادماً غير مرن فتنتقل الطاقة إلى ذرات النيون نتيجة تقارب قيم طاقة مستويات الإثارة بين الذرتين.</div>
+      <div class="list-item"><div class="bullet"></div>يحدث تراكم لذرات النيون المثارة في مستوى طاقة يتميز بفترة عمر طويلة نسبياً (يُسمى المستوى شبه المستقر) ويتحقق بذلك وضع الإسكان المعكوس.</div>
+      <div class="list-item"><div class="bullet"></div>تهبط أول مجموعة من ذرات النيون المثارة هبوطاً تلقائياً إلى مستوى طاقة إثارة أقل وتُشع بذلك فوتونات تنتشر عشوائياً في جميع الاتجاهات داخل الأنبوبة.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- USES -->
+<div id="uses" class="section">
+  <div class="section-title">💡 الاستخدامات</div>
+  <p class="section-subtitle">تطبيقات علمية وعملية للمفاهيم الفيزيائية</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title"><div class="icon">☢️</div>استخدامات الأشعة السينية</div>
+      <div class="list-item"><div class="bullet"></div>دراسة التركيب البلوري للمواد لقابليتها للحيود.</div>
+      <div class="list-item"><div class="bullet"></div>تستخدم لعلاج أمراض الجلد بجرعات صغيرة.</div>
+      <div class="list-item"><div class="bullet"></div>تصوير العظام والأجسام المعدنية لمقدرتها الكبيرة على النفاذ.</div>
+      <div class="list-item"><div class="bullet"></div>فحص صدر المرضى وفي المطارات في فحص ما بداخل الحقائب.</div>
+      <div class="list-item"><div class="bullet"></div>عمل أشعة المقطعية وفي الكشف عن الأورام.</div>
+      <div class="list-item"><div class="bullet"></div>عمل أشعة للعظام والأسنان والشرايين بعد إعطاء المريض مادة صبغة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">💡</div>استخدامات أشعة الليزر</div>
+      <div class="list-item"><div class="bullet"></div><strong>في الطب:</strong> علاج الانفصال الشبكي في العين، علاج حالات قصر وطول النظر، التشخيص والعلاج بواسطة المناظير مع الألياف الضوئية.</div>
+      <div class="list-item"><div class="bullet"></div><strong>في الاتصالات:</strong> يُستخدم الليزر والألياف الضوئية في الاتصالات كبديل لكابلات التليفونات.</div>
+      <div class="list-item"><div class="bullet"></div><strong>في الصناعة:</strong> الصناعات الدقيقة مثل ثقب الماس.</div>
+      <div class="list-item"><div class="bullet"></div><strong>في المجالات العسكرية:</strong> توجيه الصواريخ بدقة عالية والقنابل الذكية وراداز الليزر.</div>
+      <div class="list-item"><div class="bullet"></div><strong>الأقراص المدمجة (CD):</strong> التسجيل والقراءة على الأقراص المدمجة.</div>
+      <div class="list-item"><div class="bullet"></div><strong>طابعة الليزر:</strong> يُستخدم شعاع الليزر في نقل المعلومات من الكمبيوتر.</div>
+      <div class="list-item"><div class="bullet"></div><strong>الفنون والعروض الضوئية.</strong></div>
+      <div class="list-item"><div class="bullet"></div><strong>المساحة والأبعاد:</strong> تحديد المساحات والأبعاد بدقة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔋</div>استخدامات المكثف الكهربي</div>
+      <div class="list-item"><div class="bullet"></div>ختزين الشحنات الكهربية حين استخدامها عند الحاجة (مثل في الراديو).</div>
+      <div class="list-item"><div class="bullet"></div>دوائر أجهزة الراديو والتليفزيون.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔷</div>استخدامات الوصلة الثنائية</div>
+      <div class="list-item"><div class="bullet"></div>تقويم التيار المتردد.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">📱</div>استخدامات الترانزستور</div>
+      <div class="list-item"><div class="bullet"></div>مكبر للإشارة.</div>
+      <div class="list-item"><div class="bullet"></div>كمفتاح إلكتروني في البوابات المنطقية.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🔌</div>الكشاف الكهربي (إلكتروسكوب)</div>
+      <div class="list-item"><div class="bullet"></div>التعرف على الحالة الكهربية لجسم.</div>
+      <div class="list-item"><div class="bullet"></div>التعرف على نوع الشحنة الكهربية الموجودة على جسم مشحون.</div>
+      <div class="info-badge">🏗️ التركيب</div>
+      <div class="list-item"><div class="bullet"></div>ناقوس من الزجاز مغطى من الداخل بطبقة معدنية رقيقة.</div>
+      <div class="list-item"><div class="bullet"></div>ساق معدنية تتصل من أعلى بقرص معدني ومن أسفل بورقتين رقيقتين.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon">🛡️</div>الوقاية من مخاطر الأشعة السينية</div>
+      <div class="list-item"><div class="bullet"></div>تجنب التعرض للأشعة المباشرة أثناء استخدامها لتصوير المرض وذلك بابتعاد الطبيب والفني عن المريض عند تصويره وتشغيل الجهاز من بعيد.</div>
+      <div class="list-item"><div class="bullet"></div>ارتداء البالطو الذي يحتوي على طبقة رقيقة من الرصاص تمنع نفاذ الأشعة للأيدي، وكذلك قفازات.</div>
+      <div class="list-item"><div class="bullet"></div>استخدام الأجهزة التي تقيس جرعة الإشعاع التي يتعرض لها الإنسان والابتعاد عن مصدر الأشعة إذا كانت الجرعة تصل إلى حد الخطورة.</div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-divider"></div>
+    <div class="footer-name">الأستاذ / علاء فريد ت / 01009209003</div>
+    <div class="footer-copy">جميع الحقوق محفوظة © 2025 · المراجعة النهائية في الفيزياء  </div>
+  </div>
+</footer>
+
+<script>
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Re-apply search if active
+  const q = document.getElementById('globalSearch').value.trim();
+  if (q) globalFilter();
+}
+
+function toggleAcc(header) {
+  const item = header.parentElement;
+  const body = item.querySelector('.acc-body');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.acc-body').classList.remove('open');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    body.classList.add('open');
+  }
+}
+
+function globalFilter() {
+  const q = document.getElementById('globalSearch').value.toLowerCase().trim();
+  const countEl = document.getElementById('searchCount');
+  const clearBtn = document.getElementById('clearBtn');
+  const noMsg = document.getElementById('noResultsMsg');
+  const noQuery = document.getElementById('noResultsQuery');
+
+  if (!q) {
+    // Reset everything
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('hidden'));
+    document.querySelectorAll('.acc-item').forEach(a => a.classList.remove('hidden'));
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    countEl.style.display = 'none';
+    clearBtn.style.display = 'none';
+    noMsg.style.display = 'none';
+    return;
+  }
+
+  clearBtn.style.display = 'block';
+
+  let totalVisible = 0;
+
+  // Filter cards in all sections
+  document.querySelectorAll('.card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (text.includes(q)) {
+      card.classList.remove('hidden');
+      totalVisible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  // Filter accordion items in all sections
+  document.querySelectorAll('.acc-item').forEach(item => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(q)) {
+      item.classList.remove('hidden');
+      totalVisible++;
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+
+  // Show all sections when searching
+  document.querySelectorAll('.section').forEach(s => {
+    s.style.display = 'block';
+  });
+
+  countEl.style.display = 'inline';
+  countEl.textContent = totalVisible + ' نتيجة';
+
+  if (totalVisible === 0) {
+    noMsg.style.display = 'block';
+    noQuery.textContent = q;
+  } else {
+    noMsg.style.display = 'none';
+  }
+}
+
+function clearSearch() {
+  document.getElementById('globalSearch').value = '';
+  globalFilter();
+  // Restore active section
+  document.querySelectorAll('.section').forEach(s => s.style.display = '');
+  const activeSection = document.querySelector('.section.active');
+  if (activeSection) activeSection.style.display = 'block';
+}
+</script>
+
+</body>
+</html>
